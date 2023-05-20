@@ -1,6 +1,7 @@
 #include "chatgui.h"
 #include "chatbot.h"
 #include "chatlogic.h"
+#include <memory>
 #include <string>
 #include <wx/colour.h>
 #include <wx/filename.h>
@@ -116,7 +117,8 @@ ChatBotPanelDialog::ChatBotPanelDialog(wxWindow *parent, wxWindowID id)
   ////
 
   // create chat logic instance
-  _chatLogic = new ChatLogic();
+  // _chatLogic = new ChatLogic();
+  _chatLogic = std::make_unique<ChatLogic>();
 
   // pass pointer to chatbot dialog so answers can be displayed in GUI
   _chatLogic->SetPanelDialogHandle(this);
@@ -129,10 +131,10 @@ ChatBotPanelDialog::ChatBotPanelDialog(wxWindow *parent, wxWindowID id)
 }
 
 ChatBotPanelDialog::~ChatBotPanelDialog() {
-  //// TODO: STUDENT CODE
+  //// NOTE: STUDENT CODE
   ////
 
-  delete _chatLogic;
+  // delete _chatLogic;
 
   ////
   //// EOF STUDENT CODE
