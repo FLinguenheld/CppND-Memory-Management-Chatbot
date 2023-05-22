@@ -41,27 +41,54 @@ ChatBot::~ChatBot() {
 
 //// TODO: STUDENT CODE
 ////
-ChatBot::ChatBot(const ChatBot &a) {
+ChatBot::ChatBot(const ChatBot &a)
+    : _currentNode(a._currentNode), _rootNode(a._rootNode),
+      _chatLogic(a._chatLogic) {
   std::cout << "ChatBot copy constructor" << std::endl;
   _image = new wxBitmap(*a._image);
-
-  _currentNode = a._currentNode;
-  _rootNode = a._rootNode;
-  _chatLogic = a._chatLogic;
 }
 
 ChatBot &ChatBot::operator=(const ChatBot &a) {
   std::cout << "ChatBot assigment operator" << std::endl;
-  if (this == &a)
-    return *this;
+  if (this != &a) {
+    _image = new wxBitmap(*a._image);
 
-  _image = new wxBitmap(*a._image);
-
-  _currentNode = a._currentNode;
-  _rootNode = a._rootNode;
-  _chatLogic = a._chatLogic;
+    _currentNode = a._currentNode;
+    _rootNode = a._rootNode;
+    _chatLogic = a._chatLogic;
+  }
   return *this;
 }
+
+ChatBot::ChatBot(ChatBot &&a)
+    : _currentNode(std::move(a._currentNode)),
+      _rootNode(std::move(a._rootNode)), _chatLogic(std::move(a._chatLogic)),
+      _image(std::move(a._image)) {
+  std::cout << "ChatBot move constructor" << std::endl;
+  a._currentNode = nullptr;
+  a._rootNode = nullptr;
+  a._chatLogic = nullptr;
+  a._image = nullptr;
+}
+
+ChatBot &ChatBot::operator=(ChatBot &&a) {
+  std::cout << "ChatBot move operator" << std::endl;
+
+  if (this != &a) {
+    _currentNode = std::move(a._currentNode);
+    _rootNode = std::move(a._rootNode);
+    _chatLogic = std::move(a._chatLogic);
+    _image = std::move(a._image);
+  }
+
+  a._currentNode = nullptr;
+  a._rootNode = nullptr;
+  a._chatLogic = nullptr;
+  a._image = nullptr;
+
+  return *this;
+}
+
 ////
 //// EOF STUDENT CODE
 
