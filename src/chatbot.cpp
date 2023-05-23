@@ -42,8 +42,7 @@ ChatBot::~ChatBot() {
 //// TODO: STUDENT CODE
 ////
 ChatBot::ChatBot(const ChatBot &a)
-    : _currentNode(a._currentNode), _rootNode(a._rootNode),
-      _chatLogic(a._chatLogic) {
+    : _currentNode(a._currentNode), _rootNode(a._rootNode), _chatLogic(a._chatLogic) {
   std::cout << "ChatBot copy constructor" << std::endl;
   _image = new wxBitmap(*a._image);
 }
@@ -61,14 +60,15 @@ ChatBot &ChatBot::operator=(const ChatBot &a) {
 }
 
 ChatBot::ChatBot(ChatBot &&a)
-    : _currentNode(std::move(a._currentNode)),
-      _rootNode(std::move(a._rootNode)), _chatLogic(std::move(a._chatLogic)),
-      _image(std::move(a._image)) {
+    : _currentNode(std::move(a._currentNode)), _rootNode(std::move(a._rootNode)),
+      _chatLogic(std::move(a._chatLogic)), _image(std::move(a._image)) {
   std::cout << "ChatBot move constructor" << std::endl;
+  _chatLogic->SetChatbotHandle(this);
+
   a._currentNode = nullptr;
   a._rootNode = nullptr;
-  a._chatLogic = nullptr;
   a._image = nullptr;
+  a._chatLogic = nullptr;
 }
 
 ChatBot &ChatBot::operator=(ChatBot &&a) {
@@ -77,14 +77,15 @@ ChatBot &ChatBot::operator=(ChatBot &&a) {
   if (this != &a) {
     _currentNode = std::move(a._currentNode);
     _rootNode = std::move(a._rootNode);
-    _chatLogic = std::move(a._chatLogic);
     _image = std::move(a._image);
-  }
+    _chatLogic = std::move(a._chatLogic);
+    _chatLogic->SetChatbotHandle(this);
 
-  a._currentNode = nullptr;
-  a._rootNode = nullptr;
-  a._chatLogic = nullptr;
-  a._image = nullptr;
+    a._currentNode = nullptr;
+    a._rootNode = nullptr;
+    a._chatLogic = nullptr;
+    a._image = nullptr;
+  }
 
   return *this;
 }
@@ -110,9 +111,7 @@ void ChatBot::ReceiveMessageFromUser(std::string message) {
   if (levDists.size() > 0) {
     // sort in ascending order of Levenshtein distance (best fit is at the top)
     std::sort(levDists.begin(), levDists.end(),
-              [](const EdgeDist &a, const EdgeDist &b) {
-                return a.second < b.second;
-              });
+              [](const EdgeDist &a, const EdgeDist &b) { return a.second < b.second; });
     newNode = levDists.at(0).first->GetChildNode(); // after sorting the best
                                                     // edge is at first position
   } else {
@@ -158,14 +157,12 @@ int ChatBot::ComputeLevenshteinDistance(std::string s1, std::string s2) {
     costs[k] = k;
 
   size_t i = 0;
-  for (std::string::const_iterator it1 = s1.begin(); it1 != s1.end();
-       ++it1, ++i) {
+  for (std::string::const_iterator it1 = s1.begin(); it1 != s1.end(); ++it1, ++i) {
     costs[0] = i + 1;
     size_t corner = i;
 
     size_t j = 0;
-    for (std::string::const_iterator it2 = s2.begin(); it2 != s2.end();
-         ++it2, ++j) {
+    for (std::string::const_iterator it2 = s2.begin(); it2 != s2.end(); ++it2, ++j) {
       size_t upper = costs[j + 1];
       if (*it1 == *it2) {
         costs[j + 1] = corner;
