@@ -33,9 +33,6 @@ public:
   ChatBot(ChatBot &&a);
   ChatBot &operator=(ChatBot &&a);
 
-  ////
-  //// EOF STUDENT CODE
-
   // getters / setters
   void SetCurrentNode(GraphNode *node);
   void SetRootNode(GraphNode *rootNode) { _rootNode = rootNode; }

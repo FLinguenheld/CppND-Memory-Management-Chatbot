@@ -12,41 +12,8 @@
 #include "graphedge.h"
 #include "graphnode.h"
 
-ChatLogic::ChatLogic() : _chatBot(nullptr) {
-  //// TODO: STUDENT CODE
-  ////
-
-  // create instance of chatbot
-  // _chatBot = new ChatBot("../images/chatbot.png");
-
-  // add pointer to chatlogic so that chatbot answers can be passed on to the
-  // GUI
-
-  ////
-  //// EOF STUDENT CODE
-}
-
-ChatLogic::~ChatLogic() {
-  //// NOTE: STUDENT CODE
-  ////
-
-  // delete chatbot instance
-  // delete _chatBot; // Useless now
-
-  // delete all nodes
-  // for (auto it = std::begin(_nodes); it != std::end(_nodes); ++it)
-  // {
-  //     delete *it;
-  // }
-
-  // delete all edges
-  // for (auto it = std::begin(_edges); it != std::end(_edges); ++it) {
-  //   delete *it;
-  // }
-
-  ////
-  //// EOF STUDENT CODE
-}
+ChatLogic::ChatLogic() : _chatBot(nullptr) {}
+ChatLogic::~ChatLogic() {}
 
 template <typename T>
 void ChatLogic::AddAllTokensToElement(std::string tokenID, tokenlist &tokens, T &element) {
@@ -114,8 +81,7 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename) {
 
           // node-based processing
           if (type->second == "NODE") {
-            //// NOTE: STUDENT CODE : Replace ptr by make_unique and new
-            /// GraphNode by make_unique
+            //// NOTE: STUDENT CODE : Replace ptr by make_unique and new GraphNode by make_unique
             ////
 
             // check if node with this ID exists already
@@ -220,24 +186,19 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename) {
 
   // Create a local ChatBot then use move semantics to pass it to the root node.
   ChatBot chatbot("../images/chatbot.png");
+  _chatBot = &chatbot;
   chatbot.SetChatLogicHandle(this);
   chatbot.SetRootNode(rootNode);
-  _chatBot = &chatbot;
   rootNode->MoveChatbotHere(chatbot);
 
-  // _chatBot.SetRootNode(rootNode);
-  // rootNode->MoveChatbotHere(_chatBot);
+  // Save the ptr for other methods (dangerous ?)
 
   ////
   //// EOF STUDENT CODE
 }
 
 void ChatLogic::SetPanelDialogHandle(ChatBotPanelDialog *panelDialog) { _panelDialog = panelDialog; }
-
 void ChatLogic::SetChatbotHandle(ChatBot *chatbot) { _chatBot = chatbot; }
-
 void ChatLogic::SendMessageToChatbot(std::string message) { _chatBot->ReceiveMessageFromUser(message); }
-
 void ChatLogic::SendMessageToUser(std::string message) { _panelDialog->PrintChatbotResponse(message); }
-
 wxBitmap *ChatLogic::GetImageFromChatbot() { return _chatBot->GetImageHandle(); }

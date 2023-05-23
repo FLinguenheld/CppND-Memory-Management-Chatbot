@@ -11,7 +11,7 @@
 // constructor WITHOUT memory allocation
 ChatBot::ChatBot() {
   // invalidate data handles
-  _image = nullptr;
+  _image = NULL;
   _chatLogic = nullptr;
   _rootNode = nullptr;
 }
@@ -28,6 +28,8 @@ ChatBot::ChatBot(std::string filename) {
   _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
 }
 
+//// NOTE: STUDENT CODE : Rule of five
+////
 ChatBot::~ChatBot() {
   std::cout << "ChatBot Destructor" << std::endl;
 
@@ -39,8 +41,6 @@ ChatBot::~ChatBot() {
   }
 }
 
-//// TODO: STUDENT CODE
-////
 ChatBot::ChatBot(const ChatBot &a)
     : _currentNode(a._currentNode), _rootNode(a._rootNode), _chatLogic(a._chatLogic) {
   std::cout << "ChatBot copy constructor" << std::endl;
@@ -67,7 +67,7 @@ ChatBot::ChatBot(ChatBot &&a)
 
   a._currentNode = nullptr;
   a._rootNode = nullptr;
-  a._image = nullptr;
+  a._image = NULL;
   a._chatLogic = nullptr;
 }
 
@@ -84,12 +84,11 @@ ChatBot &ChatBot::operator=(ChatBot &&a) {
     a._currentNode = nullptr;
     a._rootNode = nullptr;
     a._chatLogic = nullptr;
-    a._image = nullptr;
+    a._image = NULL;
   }
 
   return *this;
 }
-
 ////
 //// EOF STUDENT CODE
 
