@@ -13,13 +13,12 @@ class GraphNode;
 
 class ChatLogic {
 private:
-  //// NOTE: STUDENT CODE : Use unique_ptr for
-  ///_nodes
+  //// NOTE: STUDENT CODE : Use unique_ptr for _nodes and remove _edges
   ////
 
   // data handles (owned)
   std::vector<std::unique_ptr<GraphNode>> _nodes;
-  std::vector<GraphEdge *> _edges;
+  // std::vector<GraphEdge *> _edges;
 
   ////
   //// EOF STUDENT CODE
