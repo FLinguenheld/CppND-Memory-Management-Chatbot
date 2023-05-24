@@ -19,6 +19,6 @@ void GraphNode::MoveChatbotHere(ChatBot chatbot) {
   _chatBot.SetCurrentNode(this);
 }
 
-void GraphNode::MoveChatbotToNewNode(GraphNode *newNode) { newNode->MoveChatbotHere(_chatBot); }
+void GraphNode::MoveChatbotToNewNode(GraphNode *newNode) { newNode->MoveChatbotHere(std::move(_chatBot)); }
 
 GraphEdge *GraphNode::GetChildEdgeAtIndex(int index) { return _childEdges[index].get(); }
