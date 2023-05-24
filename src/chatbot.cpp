@@ -10,6 +10,7 @@
 
 // constructor WITHOUT memory allocation
 ChatBot::ChatBot() {
+  // std::cout << "ChatBot empty Constructor" << std::endl;
   // invalidate data handles
   _image = NULL;
   _chatLogic = nullptr;
@@ -60,25 +61,26 @@ ChatBot &ChatBot::operator=(const ChatBot &a) {
 }
 
 ChatBot::ChatBot(ChatBot &&a)
-    : _currentNode(std::move(a._currentNode)), _rootNode(std::move(a._rootNode)),
-      _chatLogic(std::move(a._chatLogic)), _image(std::move(a._image)) {
+    : _currentNode(a._currentNode), _rootNode(a._rootNode), _chatLogic(a._chatLogic), _image(a._image) {
   std::cout << "ChatBot move constructor" << std::endl;
+
   _chatLogic->SetChatbotHandle(this);
 
   a._currentNode = nullptr;
   a._rootNode = nullptr;
-  a._image = NULL;
   a._chatLogic = nullptr;
+  a._image = NULL;
 }
 
 ChatBot &ChatBot::operator=(ChatBot &&a) {
   std::cout << "ChatBot move operator" << std::endl;
 
   if (this != &a) {
-    _currentNode = std::move(a._currentNode);
-    _rootNode = std::move(a._rootNode);
-    _image = std::move(a._image);
-    _chatLogic = std::move(a._chatLogic);
+    _currentNode = a._currentNode;
+    _rootNode = a._rootNode;
+    _image = a._image;
+    _chatLogic = a._chatLogic;
+
     _chatLogic->SetChatbotHandle(this);
 
     a._currentNode = nullptr;
