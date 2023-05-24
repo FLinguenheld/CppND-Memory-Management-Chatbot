@@ -172,9 +172,7 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename) {
   }
 
   // Create a local ChatBot then use move semantics to pass it to the root node.
-  // Save the ptr for other methods (dangerous ?)
   ChatBot chatbot("../images/chatbot.png");
-  _chatBot = &chatbot;
   chatbot.SetChatLogicHandle(this);
   chatbot.SetRootNode(rootNode);
   rootNode->MoveChatbotHere(chatbot);
