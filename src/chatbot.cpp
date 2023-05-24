@@ -32,13 +32,15 @@ ChatBot::ChatBot(std::string filename) {
 //// NOTE: STUDENT CODE : Rule of five
 ////
 ChatBot::~ChatBot() {
-  std::cout << "ChatBot Destructor" << std::endl;
 
   // deallocate heap memory
   if (_image != NULL) // Attention: wxWidgets used NULL and not nullptr
   {
     delete _image;
     _image = NULL;
+    std::cout << "ChatBot Destructor" << std::endl;
+  } else {
+    std::cout << "ChatBot Destructor (without image)" << std::endl;
   }
 }
 
