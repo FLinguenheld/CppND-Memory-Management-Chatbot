@@ -45,7 +45,7 @@ public:
   //// NOTE: STUDENT CODE
   ////
 
-  void MoveChatbotHere(ChatBot &chatbot);
+  void MoveChatbotHere(ChatBot chatbot);
   void MoveChatbotToNewNode(GraphNode *newNode);
 };
 
